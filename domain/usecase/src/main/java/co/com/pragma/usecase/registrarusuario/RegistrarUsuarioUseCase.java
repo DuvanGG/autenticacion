@@ -1,7 +1,6 @@
 package co.com.pragma.usecase.registrarusuario;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import co.com.pragma.model.usuario.Usuario;
 import co.com.pragma.model.usuario.gateways.UsuarioRepository;
@@ -46,7 +45,6 @@ public class RegistrarUsuarioUseCase {
 	    	return Mono.error(new IllegalArgumentException("La fecha de nacimiento debe ser pasada"));
 	    }
 	    
-	    usuario.setFechaNacimiento(fechaNacimiento);
 
 	    // Validación de unicidad de correo
 	    return usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico())
