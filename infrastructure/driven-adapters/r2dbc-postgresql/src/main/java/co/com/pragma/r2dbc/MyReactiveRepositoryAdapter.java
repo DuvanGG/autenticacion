@@ -26,6 +26,8 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
 
     /**
      * Guardar usuario en bd.
+     * NOTA: La anotación @Transactional convencional funciona solo con bases de datos bloqueantes
+     * Para lograr transacciones en WebFlux con R2DBC, debes usar la transacciones reactivas con TransactionalOperator en lugar de @Transactional.
      */
     @Override
     @Transactional
