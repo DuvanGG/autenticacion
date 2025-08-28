@@ -8,14 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import reactor.core.publisher.Mono;
 
 @Component
 public class GlobalErrorWebExceptionHandler implements ErrorWebExceptionHandler {
 
-	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {

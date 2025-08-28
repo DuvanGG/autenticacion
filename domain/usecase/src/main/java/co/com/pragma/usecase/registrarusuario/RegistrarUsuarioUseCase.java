@@ -1,5 +1,8 @@
 package co.com.pragma.usecase.registrarusuario;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import co.com.pragma.model.usuario.Usuario;
 import co.com.pragma.model.usuario.gateways.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +31,28 @@ public class RegistrarUsuarioUseCase {
 	    if (!usuario.getCorreoElectronico().matches(emailRegex)) {
 	        return Mono.error(new IllegalArgumentException("El correo electrónico no tiene un formato válido"));
 	    }
+	    
+	    String fechaNacimientoStr = usuario.getFechaNacimiento().toString();
+
+	    String regexFecha = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
+
+	    if (!fechaNacimientoStr.matches(regexFecha)) {
+	        return Mono.error(new IllegalArgumentException("Formato fecha nacimiento inválido (yyyy-MM-dd)"));
+	    }
+
+	    
+	    LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
+	    if (fechaNacimiento.isAfter(LocalDate.now())) {
+	    	return Mono.error(new IllegalArgumentException("La fecha de nacimiento debe ser pasada"));
+	    }
+	    
+	    usuario.setFechaNacimiento(fechaNacimiento);
 
 	    // Validación de unicidad de correo
 	    return usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico())
 	        .flatMap(u -> Mono.<Usuario>error(new IllegalArgumentException("El correo ya está registrado")))
 	        .switchIfEmpty(usuarioRepository.save(usuario));
+	    
+	    
 	}
 }
