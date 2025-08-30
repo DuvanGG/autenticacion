@@ -37,6 +37,7 @@ public class GlobalErrorWebExceptionHandler implements ErrorWebExceptionHandler 
 
 		response.setStatusCode(status);
 
+		// revisar
 		byte[] bytes = ("{\"error\": \"" + errorMessage + "\"}").getBytes(StandardCharsets.UTF_8);
 
 		return response.writeWith(Mono.just(response.bufferFactory().wrap(bytes)));

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import co.com.pragma.model.usuario.Usuario;
+import co.com.pragma.api.dto.UsuarioRequestDTO;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
@@ -35,13 +35,13 @@ public class RouterRest {
                 requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     description = "Datos del usuario a registrar",
-                    content = @Content(schema = @Schema(implementation = Usuario.class))
+                    content = @Content(schema = @Schema(implementation = UsuarioRequestDTO.class))
                 ),
                 responses = {
                     @ApiResponse(
                         responseCode = "200",
                         description = "Usuario registrado correctamente",
-                        content = @Content(schema = @Schema(implementation = Usuario.class))
+                        content = @Content(schema = @Schema(implementation = UsuarioRequestDTO.class))
                     ),
                     @ApiResponse(
                         responseCode = "400",
